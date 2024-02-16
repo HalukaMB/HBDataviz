@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/Onemore"
+VIRTUAL_ENV="/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/TemplateFolder/Wrangle"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -54,7 +54,7 @@ fi
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
-    PS1="(Onemore) ${PS1:-}"
+    PS1="(Wrangle) ${PS1:-}"
     export PS1
 fi
 

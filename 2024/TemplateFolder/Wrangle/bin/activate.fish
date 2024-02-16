@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/Onemore"
+set -gx VIRTUAL_ENV "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/TemplateFolder/Wrangle"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
@@ -52,7 +52,7 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
         set -l old_status $status
 
         # Output the venv prompt; color taken from the blue of the Python logo.
-        printf "%s%s%s" (set_color 4B8BBE) "(Onemore) " (set_color normal)
+        printf "%s%s%s" (set_color 4B8BBE) "(Wrangle) " (set_color normal)
 
         # Restore the return status of the previous command.
         echo "exit $old_status" | .
