@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/jupyter_ai/chat_handlers/base.py", line 113, in on_message
+    await self.process_message(message)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/jupyter_ai/chat_handlers/generate.py", line 273, in process_message
+    final_path = await self._generate_notebook(prompt=message.body)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/jupyter_ai/chat_handlers/generate.py", line 255, in _generate_notebook
+    await afill_outline(outline, llm=self.llm, verbose=True)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/jupyter_ai/chat_handlers/generate.py", line 198, in afill_outline
+    await asyncio.gather(*all_coros)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/jupyter_ai/chat_handlers/generate.py", line 173, in generate_summary
+    summary = await summary_chain.apredict(content=outline)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/llm.py", line 310, in apredict
+    return (await self.acall(kwargs, callbacks=callbacks))[self.output_key]
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_core/_api/deprecation.py", line 154, in awarning_emitting_wrapper
+    return await wrapped(*args, **kwargs)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/base.py", line 433, in acall
+    return await self.ainvoke(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/base.py", line 217, in ainvoke
+    raise e
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/base.py", line 208, in ainvoke
+    await self._acall(inputs, run_manager=run_manager)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/llm.py", line 275, in _acall
+    response = await self.agenerate([inputs], run_manager=run_manager)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain/chains/llm.py", line 142, in agenerate
+    return await self.llm.agenerate_prompt(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 554, in agenerate_prompt
+    return await self.agenerate(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 514, in agenerate
+    raise exceptions[0]
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_core/language_models/chat_models.py", line 617, in _agenerate_with_cache
+    return await self._agenerate(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_community/chat_models/openai.py", line 530, in _agenerate
+    response = await acompletion_with_retry(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/langchain_community/chat_models/openai.py", line 105, in acompletion_with_retry
+    return await llm.async_client.create(**kwargs)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/resources/chat/completions.py", line 1330, in create
+    return await self._post(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1725, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1428, in request
+    return await self._request(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1504, in _request
+    return await self._retry_request(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1550, in _retry_request
+    return await self._request(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1504, in _request
+    return await self._retry_request(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1550, in _retry_request
+    return await self._request(
+  File "/Users/maier-borst.h/Documents/CodeRelated/HBDataviz/2024/01_DummyForAI/lib/python3.9/site-packages/openai/_base_client.py", line 1519, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-3.5-turbo in organization org-wLBsLZVqLEdD8f0rlUU9FN5D on requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 20s. Visit https://platform.openai.com/account/rate-limits to learn more. You can increase your rate limit by adding a payment method to your account at https://platform.openai.com/account/billing.', 'type': 'requests', 'param': None, 'code': 'rate_limit_exceeded'}}
