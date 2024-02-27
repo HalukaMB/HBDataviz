@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	let clickcounter = 0;
-	 let tenseconds = 0;
+	 let seconds = 0;
 	let timerId = null;
 
 	function update() {
@@ -15,15 +15,15 @@
 		}
 	}
 	let start = () => {
-        tenseconds = 0;
+        seconds = 0;
 		timerId = setInterval(() => {
-			tenseconds += 0.1;
+			seconds += 0.1;
 		}, 100);
 	};
 	let stop = () => {
 		clearInterval(timerId);
 		timerId = null;
-        console.log(tenseconds);
+        console.log(seconds);
 	};
 
 	let count = 0;
@@ -44,15 +44,20 @@
 
 	<div class="counter-viewport">
 		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{(10*Math.floor(tenseconds + 1))/10}</strong>
-			<strong>{10*Math.floor(tenseconds)}</strong>
+			<strong class="hidden" aria-hidden="true">{Math.floor(seconds*350 + 1)}</strong>
+			<strong>{Math.floor(seconds*350)}</strong>
 		</div>
 	</div>
-	<button on:touchstart={update}>
-		{(clickcounter%2!=0)? 'Stop' : 'Start'}
-	</button>
+
 
 </div>
+<div class="counter">
+
+<button on:touchstart={update}>
+	{(clickcounter%2!=0)? 'Stop' : 'Start'}
+</button>
+</div>
+
 
 <style>
 	.counter {
@@ -90,7 +95,7 @@
 	}
 
 	.counter-viewport {
-		width: 8em;
+		width: 16em;
 		height: 4em;
 		overflow: hidden;
 		text-align: center;
@@ -103,7 +108,7 @@
 		width: 100%;
 		height: 100%;
 		font-weight: 400;
-		color: var(--color-theme-1);
+		color: #e87511;
 		font-size: 4rem;
 		align-items: center;
 		justify-content: center;
