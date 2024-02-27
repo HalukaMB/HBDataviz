@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
+	import taylorstart from '$lib/images/TaylorStart-removebg-preview.png';
+	import taylorstop from '$lib/images/TaylorStop-removebg-preview.png';
+
 	let clickcounter = 0;
-	 let seconds = 0;
+	let seconds = 0;
 	let timerId = null;
 
 	function update() {
+		console.log("clicked")
 		clickcounter += 1;
 		console.log('clicked: ', clickcounter);
 		if (clickcounter % 2 == 0) {
@@ -15,7 +19,7 @@
 		}
 	}
 	let start = () => {
-        seconds = 0;
+		seconds = 0;
 		timerId = setInterval(() => {
 			seconds += 0.1;
 		}, 100);
@@ -23,7 +27,7 @@
 	let stop = () => {
 		clearInterval(timerId);
 		timerId = null;
-        console.log(seconds);
+		console.log(seconds);
 	};
 
 	let count = 0;
@@ -39,25 +43,31 @@
 	}
 </script>
 
+<div class="taylorstartstop">
+	<picture>
+	{#if (clickcounter % 2 != 0)}
+		<img src={taylorstart} type="image/png" alt="Taylor Swift läuft"/>
+	{:else}
+		<img src={taylorstop} type="image/png"  alt="Taylor Swift steht"/>
+	{/if}
+		
+	
+	</picture>
+</div>
+
 <div class="counter">
-
-
 	<div class="counter-viewport">
 		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor(seconds*350 + 1)}</strong>
-			<strong>{Math.floor(seconds*350)}</strong>
+			<strong class="hidden" aria-hidden="true">{Math.floor(seconds * 350 + 1)}</strong>
+			<strong>{Math.floor(seconds * 350)}</strong>
 		</div>
 	</div>
-
-
 </div>
 <div class="counter">
-
-<button on:touchstart={update}>
-	{(clickcounter%2!=0)? 'Stop' : 'Start'}
-</button>
+	<button on:touchstart={update}>
+		{clickcounter % 2 != 0 ? 'Stop' : 'Start'}
+	</button>
 </div>
-
 
 <style>
 	.counter {
@@ -93,6 +103,7 @@
 		stroke-width: 2px;
 		stroke: #444;
 	}
+
 
 	.counter-viewport {
 		width: 16em;
