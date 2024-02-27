@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
+	export let seconds;
 
 	let count = 0;
 
 	//
 	const displayed_count = spring();
 	$: displayed_count.set(count);
-	$: offset = modulo($displayed_count, 1);
+	$: offset = modulo($seconds, 1);
 
 	function modulo(n: number, m: number) {
 		// handle negative numbers
@@ -23,8 +24,8 @@
 
 	<div class="counter-viewport">
 		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor($displayed_count + 1)}</strong>
-			<strong>{Math.floor($displayed_count)}</strong>
+			<strong class="hidden" aria-hidden="true">{Math.floor($seconds + 1)}</strong>
+			<strong>{Math.floor($seconds)}</strong>
 		</div>
 	</div>
 

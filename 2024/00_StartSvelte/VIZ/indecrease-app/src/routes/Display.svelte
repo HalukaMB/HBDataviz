@@ -1,42 +1,31 @@
 <script>
-    let clickcounter = 0
-    let timeinseconds = 0
-    const timefunction=setInterval(()=>{timeinseconds+=1;
-    console.log(timeinseconds);
-    },1000)
+	let clickcounter = 0;
+	export let seconds = 0;
+	let timerId = null;
 
-
-	let name = 'world';
 	function update() {
-		name = 'Svelte';
-        clickcounter += 1
-        console.log(clickcounter);
-        if (clickcounter%2==0){
-            stop()
-
-        }
-        if (clickcounter%2==1){
-            start()
-
-        }
-
+		clickcounter += 1;
+		console.log('clicked: ', clickcounter);
+		if (clickcounter % 2 == 0) {
+			stop();
+		}
+		if (clickcounter % 2 == 1) {
+			start();
+		}
 	}
-    let start=()=>{
-        console.log("start");
-        timefunction;
-    }
-    let stop=()=>{
-        clearInterval(timefunction)
-        console.log("stop");
-    }
-
-
-  
-
+	let start = () => {
+        seconds = 0;
+		timerId = setInterval(() => {
+			seconds += 1;
+		}, 1000);
+	};
+	let stop = () => {
+		clearInterval(timerId);
+		timerId = null;
+        console.log(seconds);
+	};
 </script>
-<button
-	on:touchstart={update}
-    >
-  Hello {name}!
-</button>
 
+<button on:touchstart={update}>
+	{(clickcounter%2!=0)? 'Stop' : 'Start'}
+</button>
