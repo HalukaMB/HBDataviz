@@ -26,8 +26,7 @@
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
 
-	<Counter bind:seconds/>
-	<Display bind:seconds/>
+	<Counter/>
 </section>
 
 <style>

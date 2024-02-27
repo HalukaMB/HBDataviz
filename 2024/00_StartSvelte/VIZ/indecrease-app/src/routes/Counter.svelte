@@ -1,13 +1,37 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
-	export let seconds;
+	let clickcounter = 0;
+	 let tenseconds = 0;
+	let timerId = null;
+
+	function update() {
+		clickcounter += 1;
+		console.log('clicked: ', clickcounter);
+		if (clickcounter % 2 == 0) {
+			stop();
+		}
+		if (clickcounter % 2 == 1) {
+			start();
+		}
+	}
+	let start = () => {
+        tenseconds = 0;
+		timerId = setInterval(() => {
+			tenseconds += 0.1;
+		}, 100);
+	};
+	let stop = () => {
+		clearInterval(timerId);
+		timerId = null;
+        console.log(tenseconds);
+	};
 
 	let count = 0;
 
 	//
 	const displayed_count = spring();
 	$: displayed_count.set(count);
-	$: offset = modulo($seconds, 1);
+	$: offset = modulo($displayed_count, 1);
 
 	function modulo(n: number, m: number) {
 		// handle negative numbers
@@ -16,24 +40,18 @@
 </script>
 
 <div class="counter">
-	<button on:click={() => (count -= 1)} aria-label="Decrease the counter by one">
-		<svg aria-hidden="true" viewBox="0 0 1 1">
-			<path d="M0,0.5 L1,0.5" />
-		</svg>
-	</button>
+
 
 	<div class="counter-viewport">
 		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor($seconds + 1)}</strong>
-			<strong>{Math.floor($seconds)}</strong>
+			<strong class="hidden" aria-hidden="true">{(10*Math.floor(tenseconds + 1))/10}</strong>
+			<strong>{10*Math.floor(tenseconds)}</strong>
 		</div>
 	</div>
-
-	<button on:click={() => (count += 1)} aria-label="Increase the counter by one">
-		<svg aria-hidden="true" viewBox="0 0 1 1">
-			<path d="M0,0.5 L1,0.5 M0.5,0 L0.5,1" />
-		</svg>
+	<button on:touchstart={update}>
+		{(clickcounter%2!=0)? 'Stop' : 'Start'}
 	</button>
+
 </div>
 
 <style>
