@@ -1,14 +1,17 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
 	import taylorstart from '$lib/images/taylor-singing.png';
-	import taylorstop from '$lib/images/TaylorStop-removebg-preview.png';
+	import taylorstop from '$lib/images/TaylorStart-removebg-preview.png';
 
 	let clickcounter = 0;
 	let seconds = 0;
 	let timerId = null;
+	let dollars = 0;
+	let dollars_to_earn = 20;
+	$: dollars = 5.85 * seconds;
 
 	function update() {
-		console.log("clicked")
+		console.log('clicked');
 		clickcounter += 1;
 		console.log('clicked: ', clickcounter);
 		if (clickcounter % 2 == 0) {
@@ -35,28 +38,41 @@
 	//
 	const displayed_count = spring();
 	$: displayed_count.set(count);
-	$: offset = modulo($displayed_count, 1);
-
-	function modulo(n: number, m: number) {
-		// handle negative numbers
-		return ((n % m) + m) % m;
-	}
+	$: offset = displayed_count;
 </script>
 
+<h1>Mit Taylor Geld verdienen</h1>
 <div class="taylorstartstop">
-	{#if (clickcounter % 2 != 0)}
-		<img src={taylorstart} type="image/png" alt="Taylor Swift läuft"/>
+	{#if clickcounter % 2 != 0}
+		<img src={taylorstart} type="image/png" alt="Taylor Swift singt" />
 	{:else}
-		<img src={taylorstop} type="image/png"  alt="Taylor Swift steht"/>
+		<img src={taylorstop} type="image/png" alt="Taylor Swift steht" />
 	{/if}
 </div>
-
+<div>
+	Schätzen Sie, wie lange Taylor Swift braucht, bis sie {dollars_to_earn} Dollar verdient hat.
+</div>
 <div class="counter">
 	<div class="counter-viewport">
 		<div class="counter-digits" style="transform: translate(0, {100 * offset}%)">
-			<strong class="hidden" aria-hidden="true">{Math.floor(seconds * 5.85 + 0.1)}</strong>
-			<strong>$ {Math.floor(seconds * 5.85)}</strong>
+			<strong class="hidden" aria-hidden="true">{(Math.floor(seconds + 1) * 10) / 10}</strong>
+			{#if clickcounter % 2 != 0}
+				<strong>{Math.floor(seconds * 10) / 10} s</strong>
+			{:else}
+				<strong>$ {Math.floor(dollars * 10) / 10}</strong>
+			{/if}
 		</div>
+	</div>
+	<div class="commentfield">
+		{#if (clickcounter % 2 == 0)&&(clickcounter!=0)}
+			{#if dollars / dollars_to_earn < 0.8}
+				<p>Naja, das wäre ein bisschen sehr schnell.</p>
+			{:else if dollars / dollars_to_earn > 1.2}
+				<p>Taylor ist da schneller.</p>
+			{:else}
+				<p>Recht gut geschätzt.</p>
+			{/if}
+		{/if}
 	</div>
 </div>
 <div class="counter">
@@ -83,6 +99,7 @@
 		background-color: transparent;
 		touch-action: manipulation;
 		font-size: 2rem;
+		white-space: nowrap;
 	}
 
 	.counter button:hover {
@@ -95,14 +112,13 @@
 		margin: 1rem 0;
 		min-height: 3em;
 		min-width: 3em;
-
 	}
 
-	img{
+	img {
 		object-fit: contain;
-		height:170px;
-    width:auto;/*maintain aspect ratio*/
-    max-width:500px;
+		height: 170px;
+		width: auto; /*maintain aspect ratio*/
+		max-width: 500px;
 	}
 	svg {
 		width: 25%;
@@ -114,7 +130,6 @@
 		stroke-width: 2px;
 		stroke: #444;
 	}
-
 
 	.counter-viewport {
 		width: 16em;
