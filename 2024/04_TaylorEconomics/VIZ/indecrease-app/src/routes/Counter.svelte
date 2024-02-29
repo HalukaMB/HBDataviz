@@ -41,7 +41,6 @@
 	$: offset = displayed_count;
 </script>
 
-<h1>Mit Taylor Geld verdienen</h1>
 <div class="taylorstartstop">
 	{#if clickcounter % 2 != 0}
 		<img src={taylorstart} type="image/png" alt="Taylor Swift singt" />
@@ -64,18 +63,20 @@
 		</div>
 	</div>
 	<div class="commentfield">
-		{#if (clickcounter % 2 == 0)&&(clickcounter!=0)}
+		{#if clickcounter % 2 == 0 && clickcounter != 0}
 			{#if dollars / dollars_to_earn < 0.8}
-				<p>Naja, das wäre ein bisschen sehr schnell.</p>
+				<div>Naja, das wäre ein bisschen sehr schnell.</div>
 			{:else if dollars / dollars_to_earn > 1.2}
-				<p>Taylor ist da schneller.</p>
+				<div>Taylor ist da schneller.</div>
 			{:else}
-				<p>Recht gut geschätzt.</p>
+				<div>Recht gut geschätzt.</div>
 			{/if}
+		{:else}
+			<div></div>
 		{/if}
 	</div>
 </div>
-<div class="counter">
+<div class="counter-button-div">
 	<button on:click={update}>
 		{clickcounter % 2 != 0 ? 'Stop' : 'Start'}
 	</button>
@@ -83,14 +84,19 @@
 
 <style>
 	.counter {
+		width: 90%;
 		display: flex;
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		padding: 0.5em;
 		margin: 1rem 0;
 	}
 
-	.counter button {
-		width: 2em;
+	.counter-button-div button {
+		width: 5em;
+		height: 2em;
+		border-radius: 0.2em;
+
 		padding: 0;
 		display: flex;
 		align-items: center;
@@ -100,6 +106,9 @@
 		touch-action: manipulation;
 		font-size: 2rem;
 		white-space: nowrap;
+		color: white;
+		background-color: #ef7c00;
+		border-color: #ef7c00;
 	}
 
 	.counter button:hover {
@@ -148,7 +157,6 @@
 		color: #e87511;
 		font-size: 4rem;
 		align-items: center;
-		justify-content: center;
 	}
 
 	.counter-digits {
