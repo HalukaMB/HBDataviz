@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: jupyter_ai_magics
+Version: 2.10.0
+Summary: Jupyter AI magics Python package. Not published on NPM.
+Project-URL: Homepage, https://github.com/jupyterlab/jupyter-ai
+Project-URL: Bug Tracker, https://github.com/jupyterlab/jupyter-ai/issues
+Project-URL: Repository, https://github.com/jupyterlab/jupyter-ai.git
+Author-email: Project Jupyter <jupyter@googlegroups.com>
+License: BSD 3-Clause License
+        
+        Copyright (c) 2023, Project Jupyter
+        All rights reserved.
+        
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+        
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+        
+        3. Neither the name of the copyright holder nor the names of its
+           contributors may be used to endorse or promote products derived from
+           this software without specific prior written permission.
+        
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+        AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+        IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+        FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+        DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+        CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+        OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+        OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+License-File: LICENSE
+Classifier: Framework :: Jupyter
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Requires-Dist: click~=8.0
+Requires-Dist: importlib-metadata>=5.2.0
+Requires-Dist: ipython
+Requires-Dist: jsonpath-ng<2,>=1.5.3
+Requires-Dist: langchain<0.2.0,>=0.1.0
+Requires-Dist: typing-extensions>=4.5.0
+Provides-Extra: all
+Requires-Dist: ai21; extra == 'all'
+Requires-Dist: anthropic~=0.3.0; extra == 'all'
+Requires-Dist: boto3; extra == 'all'
+Requires-Dist: cohere<5,>4.40; extra == 'all'
+Requires-Dist: gpt4all; extra == 'all'
+Requires-Dist: huggingface-hub; extra == 'all'
+Requires-Dist: ipywidgets; extra == 'all'
+Requires-Dist: langchain-nvidia-ai-endpoints; extra == 'all'
+Requires-Dist: openai~=1.6.1; extra == 'all'
+Requires-Dist: pillow; extra == 'all'
+Requires-Dist: qianfan; extra == 'all'
+Provides-Extra: dev
+Requires-Dist: pre-commit<4,>=3.3.3; extra == 'dev'
+Provides-Extra: test
+Requires-Dist: coverage; extra == 'test'
+Requires-Dist: pytest; extra == 'test'
+Requires-Dist: pytest-asyncio; extra == 'test'
+Requires-Dist: pytest-cov; extra == 'test'
+Description-Content-Type: text/markdown
+
+# @jupyter-ai/magics
+
+This is a Python library `jupyter_ai_magics` that exposes the model providers
+and defines the IPython magics.
