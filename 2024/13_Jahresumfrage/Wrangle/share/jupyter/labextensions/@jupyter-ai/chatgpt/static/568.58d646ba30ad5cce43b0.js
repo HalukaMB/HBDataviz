@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_jupyter_ai_chatgpt=self.webpackChunk_jupyter_ai_chatgpt||[]).push([[568],{568:(t,a,e)=>{e.r(a),e.d(a,{default:()=>p});const p={id:"jupyter-ai-chatgpt:plugin",autoStart:!0,activate:t=>{console.log("JupyterLab extension jupyter-ai-chatgpt is activated!")}}}}]);

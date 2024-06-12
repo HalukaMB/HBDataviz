@@ -1,0 +1,2 @@
+[jupyter_ai.model_engine_classes]
+ChatGptModelEngine = jupyter_ai_chatgpt:ChatGptModelEngine

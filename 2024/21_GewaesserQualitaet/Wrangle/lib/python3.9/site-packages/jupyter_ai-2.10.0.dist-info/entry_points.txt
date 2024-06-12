@@ -1,0 +1,2 @@
+[jupyter_ai.default_tasks]
+core_default_tasks = jupyter_ai:tasks
