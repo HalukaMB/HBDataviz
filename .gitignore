@@ -1,0 +1,7 @@
+*.csv
+*.json
+*.geojson
+*.gpkg
+*.shp
+
+
