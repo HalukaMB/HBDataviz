@@ -81,7 +81,7 @@ def is_ccw(geometry, **kwargs):
     Parameters
     ----------
     geometry : Geometry or array_like
-        This function will return False for non-linear goemetries and for
+        This function will return False for non-linear geometries and for
         lines with fewer than 4 points (including the closing point).
     **kwargs
         See :ref:`NumPy ufunc docs <ufuncs.kwargs>` for other keyword arguments.
@@ -748,7 +748,7 @@ def equals(a, b, **kwargs):
 def intersects(a, b, **kwargs):
     """Returns True if A and B share any portion of space.
 
-    Intersects implies that overlaps, touches and within are True.
+    Intersects implies that overlaps, touches, covers, or within are True.
 
     Parameters
     ----------

@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: vegafusion-python-embed
+Version: 1.6.9
+Summary: vegafusion-python-embed PyO3 Python Package
+License: BSD-3-Clause
+Description-Content-Type: text/markdown; charset=UTF-8; variant=GFM
+
+## vegafusion-python-embed
+This crate contains the Python library that embeds the VegaFusion Runtime and select Connection. This crate uses PyO3 to expose the Rust logic to CPython. 

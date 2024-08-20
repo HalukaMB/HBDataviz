@@ -4,6 +4,7 @@ Airbus,AIR.PA
 Allianz,ALV.DE
 BASF,BAS.DE
 Bayer,BAYN.DE
+Beiersdorf,BEI.DE
 BMW,BMW.DE
 Brenntag,BNR.DE
 Continental,CON.DE
@@ -15,14 +16,13 @@ Deutsche Bank,DBK.DE
 Deutsche Post,DHL.DE
 Deutsche Telekom,DTE.DE
 E.ON,EOAN.DE
-Fresenius,FME.DE
-Fresenius Medical Care,FMEA.SG
-Hannover Rück,HNRB.DE
+Fresenius,FRE.DE
+Fresenius Medical Care,FME.DE
+Hannover Rück,HNR1.DE
 HeidelbergCement,HEI.DE
 Hello Fresh,HFG.DE
 Henkel,HEN3.DE
 Infineon,IFX.DE
-Linde,LIN.DE
 Mercedes Benz,MBG.DE
 Merck,MRK.DE
 MTU Aero Engines,MTX.DE
@@ -32,7 +32,7 @@ Puma,PUM.DE
 QIAGEN,QIA.DE
 RWE,RWE.DE
 SAP,SAP.DE
-Sartorius,SRP.DE
+Sartorius,SRT3.DE
 Siemens,SIE.DE
 Siemens Healthineers,SHL.DE
 Symrise,SY1.DE

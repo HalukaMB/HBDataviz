@@ -412,17 +412,18 @@ def delaunay_triangles(geometry, tolerance=0.0, only_edges=False, **kwargs):
     --------
     >>> from shapely import GeometryCollection, LineString, MultiPoint, Polygon
     >>> points = MultiPoint([(50, 30), (60, 30), (100, 100)])
-    >>> delaunay_triangles(points)
-    <GEOMETRYCOLLECTION (POLYGON ((50 30, 60 30, 100 100, 50 30)))>
+    >>> delaunay_triangles(points).normalize()
+    <GEOMETRYCOLLECTION (POLYGON ((50 30, 100 100, 60 30, 50 30)))>
     >>> delaunay_triangles(points, only_edges=True)
     <MULTILINESTRING ((50 30, 100 100), (50 30, 60 30), ...>
     >>> delaunay_triangles(MultiPoint([(50, 30), (51, 30), (60, 30), (100, 100)]), \
-tolerance=2)
-    <GEOMETRYCOLLECTION (POLYGON ((50 30, 60 30, 100 100, 50 30)))>
-    >>> delaunay_triangles(Polygon([(50, 30), (60, 30), (100, 100), (50, 30)]))
-    <GEOMETRYCOLLECTION (POLYGON ((50 30, 60 30, 100 100, 50 30)))>
-    >>> delaunay_triangles(LineString([(50, 30), (60, 30), (100, 100)]))
-    <GEOMETRYCOLLECTION (POLYGON ((50 30, 60 30, 100 100, 50 30)))>
+tolerance=2).normalize()
+    <GEOMETRYCOLLECTION (POLYGON ((50 30, 100 100, 60 30, 50 30)))>
+    >>> delaunay_triangles(Polygon([(50, 30), (60, 30), (100, 100), (50, 30)]))\
+.normalize()
+    <GEOMETRYCOLLECTION (POLYGON ((50 30, 100 100, 60 30, 50 30)))>
+    >>> delaunay_triangles(LineString([(50, 30), (60, 30), (100, 100)])).normalize()
+    <GEOMETRYCOLLECTION (POLYGON ((50 30, 100 100, 60 30, 50 30)))>
     >>> delaunay_triangles(GeometryCollection([]))
     <GEOMETRYCOLLECTION EMPTY>
     """
@@ -533,11 +534,11 @@ def make_valid(geometry, **kwargs):
 
 @multithreading_enabled
 def normalize(geometry, **kwargs):
-    """Converts Geometry to normal form (or canonical form).
+    """Converts Geometry to strict normal form (or canonical form).
 
-    This method orders the coordinates, rings of a polygon and parts of
-    multi geometries consistently. Typically useful for testing purposes
-    (for example in combination with ``equals_exact``).
+    In :ref:`strict canonical form <canonical-form>`, the coordinates, rings of a polygon and
+    parts of multi geometries are ordered consistently. Typically useful for testing
+    purposes (for example in combination with ``equals_exact``).
 
     Parameters
     ----------

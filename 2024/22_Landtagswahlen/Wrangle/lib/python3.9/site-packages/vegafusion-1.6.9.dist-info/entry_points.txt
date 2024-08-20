@@ -1,0 +1,6 @@
+[altair.vegalite.v5.data_transformer]
+vegafusion-feather = vegafusion.transformer:feather_transformer
+vegafusion-inline = vegafusion.transformer:inline_data_transformer
+
+[altair.vegalite.v5.renderer]
+vegafusion-mime = vegafusion.renderer:vegafusion_mime_renderer

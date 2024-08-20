@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: vegafusion
+Version: 1.6.9
+Summary: Core tools for using VegaFusion from Python
+License: BSD-3-Clause
+Keywords: vega,altair,vegafusion,arrow
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Topic :: Scientific/Engineering :: Visualization
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: altair >=5.2.0
+Requires-Dist: pyarrow >=5
+Requires-Dist: pandas
+Requires-Dist: psutil
+Requires-Dist: protobuf
+Provides-Extra: embed
+Requires-Dist: vegafusion-python-embed ==1.6.9 ; extra == 'embed'
+Requires-Dist: vl-convert-python >=0.7.0 ; extra == 'embed'
+
+## VegaFusion
+This package is part of the VegaFusion project: https://vegafusion.io.
+
+In particular, the `vegafusion` package provides a pure Python interface to a VegaFusion Runtime. Initially, the only runtime available is provided by the `vegafusion-python-embed` package. Eventually, the VegaFusion runtime will be available as a standalone gRPC server and this package will be updated to support communication with a VegaFusion Runtime over gRPC as an alternative to the Runtime provided by `vegafusion-python-embed`.  
