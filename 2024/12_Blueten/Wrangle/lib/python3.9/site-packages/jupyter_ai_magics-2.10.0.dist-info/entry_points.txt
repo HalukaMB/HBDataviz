@@ -1,0 +1,23 @@
+[jupyter_ai.embeddings_model_providers]
+bedrock = jupyter_ai_magics:BedrockEmbeddingsProvider
+cohere = jupyter_ai_magics:CohereEmbeddingsProvider
+gpt4all = jupyter_ai_magics:GPT4AllEmbeddingsProvider
+huggingface_hub = jupyter_ai_magics:HfHubEmbeddingsProvider
+openai = jupyter_ai_magics:OpenAIEmbeddingsProvider
+qianfan = jupyter_ai_magics:QianfanEmbeddingsEndpointProvider
+
+[jupyter_ai.model_providers]
+ai21 = jupyter_ai_magics:AI21Provider
+amazon-bedrock = jupyter_ai_magics:BedrockProvider
+amazon-bedrock-chat = jupyter_ai_magics:BedrockChatProvider
+anthropic = jupyter_ai_magics:AnthropicProvider
+anthropic-chat = jupyter_ai_magics:ChatAnthropicProvider
+azure-chat-openai = jupyter_ai_magics:AzureChatOpenAIProvider
+cohere = jupyter_ai_magics:CohereProvider
+gpt4all = jupyter_ai_magics:GPT4AllProvider
+huggingface_hub = jupyter_ai_magics:HfHubProvider
+nvidia-chat = jupyter_ai_magics.partner_providers.nvidia:ChatNVIDIAProvider
+openai = jupyter_ai_magics:OpenAIProvider
+openai-chat = jupyter_ai_magics:ChatOpenAIProvider
+qianfan = jupyter_ai_magics:QianfanProvider
+sagemaker-endpoint = jupyter_ai_magics:SmEndpointProvider
