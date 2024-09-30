@@ -610,6 +610,17 @@ export async function main() {
       console.error(e);
     }
   }
+  if (!queuedFederated.includes('@jupyterlab/theme-dark-high-contrast-extension')) {
+    try {
+      let ext = require('@jupyterlab/theme-dark-high-contrast-extension');
+      ext.__scope__ = '@jupyterlab/theme-dark-high-contrast-extension';
+      for (let plugin of activePlugins(ext)) {
+        register.push(plugin);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
   if (!queuedFederated.includes('@jupyterlab/theme-light-extension')) {
     try {
       let ext = require('@jupyterlab/theme-light-extension');
@@ -658,6 +669,17 @@ export async function main() {
     try {
       let ext = require('@jupyterlab/ui-components-extension');
       ext.__scope__ = '@jupyterlab/ui-components-extension';
+      for (let plugin of activePlugins(ext)) {
+        register.push(plugin);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  if (!queuedFederated.includes('@jupyterlab/workspaces-extension')) {
+    try {
+      let ext = require('@jupyterlab/workspaces-extension');
+      ext.__scope__ = '@jupyterlab/workspaces-extension';
       for (let plugin of activePlugins(ext)) {
         register.push(plugin);
       }
