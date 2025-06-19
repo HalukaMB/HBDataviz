@@ -1,8 +1,8 @@
-#!/Users/halukamb/Documents/CodeRelated/HBDataviz/2024/NewTemplate12/Wrangle/bin/python3.12
+#!/Users/halukamaier-borst/Documents/CodeRelated/HBDataviz_new/2025/08_Trumptracker/Wrangle/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
-from charset_normalizer.cli import cli_detect
+from charset_normalizer import cli
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(cli_detect())
+    sys.exit(cli.cli_detect())
