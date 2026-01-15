@@ -1,0 +1,115 @@
+!Workspace
+!Version  800
+!Charset WindowsLatin1
+Open Table "PLZ_5_Flaeche" As PLZ_5_Flaeche Interactive
+Open Table "PLZ_1_Leitzone" As PLZ_1_Leitzone Interactive
+Open Table "PLZ_2_Leitregion" As PLZ_2_Leitregion Interactive
+Map From PLZ_5_Flaeche,PLZ_2_Leitregion,PLZ_1_Leitzone
+  Position (0.0104167,0.0208333) Units "in"
+  Width 7.36458 Units "in" Height 8.75 Units "in" 
+Set Window FrontWindow() ScrollBars Off Autoscroll On
+Set Map
+  CoordSys Earth Projection 1, 104
+  Center (10.30609461,51.12665806)
+  Zoom 838.7198803 Units "km"
+  Preserve Zoom Display Zoom
+  Distance Units "km" Area Units "sq km" XY Units "degree"
+shade 3 with LZ values 
+  0 Brush (2,16736352,16777215) Pen (1,1,0) ,
+  1 Brush (2,12648288,16777215) Pen (1,1,0) ,
+  2 Brush (2,6343679,16777215) Pen (1,1,0) ,
+  3 Brush (2,16756832,16777215) Pen (1,1,0) ,
+  4 Brush (2,16777072,16777215) Pen (1,1,0) ,
+  5 Brush (2,16765088,16777215) Pen (1,1,0) ,
+  6 Brush (2,13658112,16777215) Pen (1,1,0) ,
+  7 Brush (2,7405496,16777215) Pen (1,1,0) ,
+  8 Brush (2,16748744,16777215) Pen (1,1,0) ,
+  9 Brush (2,9474303,16777215) Pen (1,1,0) 
+  default Brush (1,0,16777215) Pen (1,2,0)   # color 1 # 
+Set Map
+  Layer 1
+    Display Global
+    Global Pen (1,2,0) Brush (1,16777215,16777215) Symbol (35,0,12) Line (1,2,0) Font ("Arial",0,9,0)
+    Zoom (0, 100) Units "km" 
+    Label Line None Position Center Font ("Frutiger",1,8,0) Pen (1,2,0) 
+      With PLZ_5
+      Parallel On Auto On Overlap Off Duplicates On PartialSegments On Offset 2
+      Visibility On
+  Layer 2
+    Display Global
+    Global Pen (3,2,0) Brush (1,16777215,16777215) Symbol (35,0,12) Line (1,2,0) Font ("Arial",0,9,0)
+    Zoom (0, 750) Units "km" 
+    Label Line None Position Center Font ("Frutiger",1,12,16777215,0) Pen (1,2,0) 
+      With Format$(LR, "00")
+      Parallel On Auto On Overlap On Duplicates On Offset 2
+      Visibility Zoom (91, 750) Units "km"
+   Object 29 Anchor (9.88129561175,52.103058058138) 
+  Layer 3
+    Display Value
+    Global Pen (1,2,0)  Brush (2,16777215,16777215)  Symbol (35,0,12)  Line (1,2,0)  Font ("Arial",0,9,0)
+    Selectable Off
+  Layer 4
+    Display Graphic
+    Global Pen (1,2,0) Brush (2,16777215,16777215) Symbol (35,0,12) Line (1,2,0) Font ("Arial",0,9,0)
+    Label Line None Position Center Font ("Frutiger",257,24,0,16777215) Pen (1,2,0) 
+      With LZ
+      Parallel On Auto On Overlap On Duplicates On Offset 2
+      Visibility On
+   Object 10 Anchor (11.026915556937,49.798802001874) 
+   Object 2 Anchor (12.954292780567,53.182709965185) 
+   Object 4 Anchor (9.840691633464,51.885380056429) 
+   Object 7 Anchor (8.724673368066,49.828395035779) 
+   Object 3 Anchor (9.645775626097,53.517854048861) 
+   Object 6 Anchor (7.286536966816,50.516808977353) 
+set legend 
+  layer 3 
+    display on 
+    shades on 
+    symbols off 
+    lines off 
+    count off 
+    title "Legende" Font ("Arial",1,9,0)
+    subtitle "(abhängig vom Maßstab)" Font ("Arial",0,8,0)
+    ascending on 
+    columns 3 
+    ranges Font ("Arial",0,8,0)
+      auto display off ,
+      "" display on ,
+      "" display on ,
+      "einstellige Postleitzahl (Leitzone)" display on ,
+      auto display off ,
+      auto display off ,
+      auto display off ,
+      auto display off ,
+      auto display off ,
+      auto display off ,
+      auto display off  
+Set Window FrontWindow() Title "GeoPLZ 2024.Q2                                © Deutsche Post AG - GeoDatenZentrale"
+Set Window FrontWindow() Printer
+ Name "Microsoft Print to PDF" Orientation Portrait Copies 1
+ Papersize 9
+Create Cartographic Legend
+  Position (7.71875,7.04167) Units "in"
+  Width 3.19792 Units "in" Height 1.5625 Units "in" 
+  Window Title "Legende "
+  Portrait
+  Style Size Small
+  Default Frame Title "# Legend" Font ("Arial",1,12,0)
+  Default Frame Style "%" Font ("Arial",1,10,0)
+  Frame From Layer 3
+    Border Pen (1,1,0) 
+  Frame From Layer 2
+    Border Pen (0,1,0) 
+    Title ""
+    Using Column object 
+    Style Font ("Arial",0,8,0)
+      Text "zweistellige Postleitzahl (Leitregion)" Region Pen (3,2,0)  Brush (1,0,16777215) 
+  Frame From Layer 1
+    Border Pen (0,1,0) 
+    Title ""
+    Using Column object 
+    Style Font ("Arial",0,8,0)
+      Text "fünfstellige Postleitzahl (Zustellpostleitzahl)" Region Pen (1,2,0)  Brush (1,0,16777215) 
+Set Window FrontWindow() Printer
+ Name "Microsoft Print to PDF" Orientation Portrait Copies 1
+ Papersize 9

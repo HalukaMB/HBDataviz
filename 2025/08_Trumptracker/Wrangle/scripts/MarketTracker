@@ -1,0 +1,329 @@
+# %%
+import pandas as pd
+import requests
+import numpy as np
+from bs4 import BeautifulSoup
+import yfinance
+import os
+import pygsheets
+from decimal import Decimal, ROUND_HALF_UP
+import locale
+from datetime import datetime, timedelta
+import json
+import datawrapper
+import time
+import io
+#https://github.com/patrickloeber/python-github-action-template?tab=readme-ov-file
+# Set the locale to English (United States)
+locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+#authorization
+if "PYGSHEET" in os.environ:
+
+    AUTH_DATA = os.environ["PYGSHEET"]
+    whatever_json=json.loads(AUTH_DATA, strict=False)
+    credentials = whatever_json
+
+    gc = pygsheets.authorize(service_account_json=(json.dumps(whatever_json))
+    )
+else:
+
+    gc = pygsheets.authorize(service_file='/Users/halukamaier-borst/Documents/trumptracker-459020-5b428916efa8.json')
+
+
+
+# %%
+
+# Get today's date
+today = datetime.now()
+
+# Get date 365 days ago
+date_365_days_ago = today - timedelta(days=365)
+
+# Format as string if needed
+date_365_days_ago_str = date_365_days_ago.strftime("%Y-%m-%d")
+
+print(date_365_days_ago_str)
+today
+
+# %%
+
+shanghaicomposite = yfinance.download (tickers = "000001.SS", start = date_365_days_ago_str, 
+                              interval = "1d")
+shanghaicomposite
+
+# %%
+
+dax40 = yfinance.download (tickers = "^GDAXI", start = date_365_days_ago_str,
+                              interval = "1d")
+dax40
+
+# %%
+sandp500 = yfinance.download (tickers = "^GSPC", start = date_365_days_ago_str, 
+                              interval = "1d")
+sandp500
+
+# %%
+def reduce_index(df,indexname):
+    index_red=pd.DataFrame()
+    df["Date"]=df.index
+    index_red["Date"]=df["Date"]
+
+    index_red[indexname]=df[df.columns[0]]
+
+    index_red=index_red.reset_index(drop=True)
+    return index_red
+
+
+# %%
+sandp500_red=reduce_index(sandp500,"S&P500")
+dax40_red=reduce_index(dax40,"DAX40")
+shanghaicomposite_red=reduce_index(shanghaicomposite,"SHANGHAI")
+shanghaicomposite_red
+
+# %%
+sandp500_dax40=pd.merge(sandp500_red, dax40_red, on="Date", how="outer")
+sandp500_dax40=sandp500_dax40.fillna(method="ffill")
+sandp500_dax40
+
+# %%
+sandp500_dax40_shanghai=pd.merge(sandp500_dax40, shanghaicomposite_red, on="Date", how="outer")
+sandp500_dax40_shanghai=sandp500_dax40_shanghai.fillna(method="ffill")
+sandp500_dax40_shanghai
+
+# %%
+now = datetime.now()
+today=now.strftime("%Y-%m-%d")
+since_election=sandp500_dax40_shanghai[sandp500_dax40_shanghai["Date"]>=date_365_days_ago_str]
+since_election_without_today=since_election[since_election["Date"]!=today]
+since_election_without_today
+
+# %%
+for col in since_election_without_today.columns[1:]:
+    since_election_without_today[col]= since_election_without_today[col].apply(lambda x: Decimal(str(x)))
+
+    # Example: Perform precise rounding on the Decimal column
+    since_election_without_today[col]= since_election_without_today[col].apply(lambda x: x.quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+since_election_without_today
+
+# %%
+since_election_without_today[since_election_without_today["Date"]=="2025-05-01"]
+
+# %%
+def retrieve_from_investing(index):
+    index_to_shortform_dict={"S&P500":"us-spx-500","DAX40":"germany-30",	"SHANGHAI":"shanghai-composite"}
+    now = datetime.now()
+    yesterday = now - timedelta(days=1)
+    formatted_date = yesterday.strftime("%m/%d/%Y")
+    index_shortform=index_to_shortform_dict[index]
+
+    time.sleep(10)
+
+    url=f"https://www.investing.com/indices/{index_shortform}-historical-data#:~:text=Daily-,Download,-{formatted_date}"
+    print(url)
+    response = requests.get(url)
+
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content of the page
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Find the first table on the page
+        table = soup.find('table', class_="freeze-column-w-1 w-full overflow-x-auto text-xs leading-4")
+
+        # Extract rows from the table
+        rows = table.find_all('tr')
+
+        # Extract data from each row
+        table_data = []
+        for row in rows:
+            cells = row.find_all(['td', 'th'])  # Get all cells (both <td> and <th>)
+            cell_data = [cell.get_text(strip=True) for cell in cells]  # Extract text
+            table_data.append(cell_data)
+
+        # Return the extracted table data
+        return(table_data)
+    else:
+        print(f"Failed to retrieve the page. Status code: {response.status_code}")
+
+# %%
+df_to_check=since_election_without_today
+columns_to_round = ['S&P500','DAX40','SHANGHAI']
+
+# Apply Decimal rounding to the specified columns
+df_to_check[columns_to_round] = df_to_check[columns_to_round].applymap(lambda x: Decimal(str(x)).quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+
+for index_name in since_election_without_today.columns[1:]:
+    print(index_name)
+    array=retrieve_from_investing(index_name)
+    crosscheck_data=pd.DataFrame(array)
+    crosscheck_data.replace("",np.nan,inplace=True)
+
+    crosscheck_data=crosscheck_data.dropna(how="all")
+    crosscheck_data[0]=pd.to_datetime(crosscheck_data[0], format="%b %d, %Y", errors="coerce")
+    crosscheck_data_red=crosscheck_data[[0,1]]
+    crosscheck_data_red=crosscheck_data_red.dropna(subset=[0])
+    crosscheck_data_red.columns=["Date",index_name+"check"]
+    crosscheck_data_red=crosscheck_data_red.sort_values(by="Date", ascending=True)
+    crosscheck_data_red[index_name+"check"]=crosscheck_data_red[index_name+"check"].str.replace(",","")
+    crosscheck_data_red[index_name+"check"]=crosscheck_data_red[index_name+"check"].astype(float)
+
+    crosscheck_data_red[index_name+"check"]= crosscheck_data_red[index_name+"check"].apply(lambda x: Decimal(str(x)))
+
+# Example: Perform precise rounding on the Decimal column
+    crosscheck_data_red[index_name+"check"] = crosscheck_data_red[index_name+"check"].apply(lambda x: x.quantize(Decimal('1'), rounding=ROUND_HALF_UP))
+    print("crosscheckdata")
+    print(crosscheck_data_red.tail(5))
+    print("df_to_check")
+
+    print(df_to_check.tail(5))
+
+#    df_to_check=pd.merge(df_to_check,crosscheck_data_red, on="Date", how="outer", suffixes=["_raw","_crosscheck"])
+
+    df_to_check=pd.merge(df_to_check,crosscheck_data_red, on="Date", how="outer", suffixes=["_raw","_crosscheck"])
+df_to_check=df_to_check.fillna(method="ffill")
+df_to_check
+
+
+# %%
+for index_name in since_election_without_today.columns[1:]:
+
+    df_to_check[index_name+"overlap"]=df_to_check[index_name]/df_to_check[index_name+"check"]
+df_to_check
+
+# %%
+overlap_cols=df_to_check.columns[df_to_check.columns.str.contains("overlap")]
+overlap_cols
+
+# %%
+(df_to_check[overlap_cols]==1).all(axis=1)
+
+# %%
+df_to_check["all_equal"]=(df_to_check[overlap_cols]==1).all(axis=1)
+df_to_check
+
+# %%
+
+checked_df=df_to_check[df_to_check["all_equal"]==True]
+checked_df
+
+# %%
+checked_df_red=checked_df[checked_df.columns[:4]]
+checked_df_red["Date"]=checked_df_red["Date"].dt.strftime("%Y-%m-%d")
+checked_df_red
+
+# %%
+#Open the google spreadsheet
+sh = gc.open('TrumptrackerRaw')
+sheet_name = "RawIndices"  # Replace with the name of the sheet you want to select
+wks = sh.worksheet_by_title(sheet_name)
+
+
+#Get the data from the Sheet into python as DF
+read_indices = wks.get_as_df()
+read_indices_red=read_indices[read_indices.columns[:4]]
+read_indices_red
+
+# %%
+read_plus_new_checked=pd.concat([read_indices_red,checked_df_red], axis=0, ignore_index=True)
+
+read_plus_new_checked.drop_duplicates(subset=["Date"], keep="first", inplace=True)
+read_plus_new_checked.reset_index(drop=True, inplace=True)
+read_plus_new_checked
+
+# %%
+read_plus_new_checked["Date"]=pd.to_datetime(read_plus_new_checked["Date"])
+read_plus_new_checked=read_plus_new_checked[read_plus_new_checked["Date"]>date_365_days_ago]
+read_plus_new_checked
+
+# %%
+def converter_perc(index_name):
+    df_perc=pd.DataFrame()
+    df_perc["Date"]=read_plus_new_checked["Date"]
+    col_important=read_plus_new_checked[index_name]
+    base_value=col_important.iloc[0]
+    df_perc[index_name+"_perc"]=(col_important-base_value)*100/base_value
+    df_perc[index_name+"_perc"] = df_perc[index_name+"_perc"].apply(lambda x: float(Decimal(str(x)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)))
+
+    return(df_perc)
+
+# %%
+for col in read_plus_new_checked.columns[1:]:
+    df_perc=converter_perc(col)
+    read_plus_new_checked=pd.merge(read_plus_new_checked,df_perc,on="Date",how="outer",suffixes=["_abs","_perc"])
+read_plus_new_checked 
+
+# %%
+
+
+
+#open the google spreadsheet (where 'PY to Gsheet Test' is the name of my sheet)
+sh = gc.open('TrumptrackerRaw')
+
+#select the first sheet 
+wks = sh[0]
+
+wks.set_dataframe(read_plus_new_checked,(0,0))
+
+
+# %%
+# Get the current year
+current_year = datetime.now().year
+print(current_year)
+
+# %%
+df=pd.DataFrame()
+for year in range(2024,current_year+1):
+    print(year)
+    url=f"https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/{year}/all?type=daily_treasury_yield_curve&field_tdr_date_value={year}&page&_format=csv"
+    response = requests.get(url)
+
+    file_object = io.StringIO(response.content.decode('utf-8'))
+    data=pd.read_csv(file_object)
+    df=pd.concat([df,data],axis=0)
+df
+
+# %%
+df["Date"]=pd.to_datetime(df["Date"])
+since_election_yield=df[df["Date"]>=date_365_days_ago]
+since_election_yield=since_election_yield[["Date","10 Yr"]]
+since_election_yield=since_election_yield.sort_values(by="Date", ascending=True)
+since_election_yield
+
+# %%
+
+
+
+#open the google spreadsheet (where 'PY to Gsheet Test' is the name of my sheet)
+sh = gc.open('TrumptrackerRaw')
+
+#select the first sheet 
+sheet_name = "Yield"  # Replace with the name of the sheet you want to select
+wks = sh.worksheet_by_title(sheet_name)
+
+
+wks.set_dataframe(since_election_yield,(0,0))
+
+
+# %%
+if "DWKEY" in os.environ:
+
+    DWKEY = os.environ["DWKEY"]
+    print(len(DWKEY))
+
+
+else:
+    data=pd.read_csv("/Users/halukamaier-borst/Documents/Keys.csv")
+    DWKEY=data.APIKey.iloc[1]
+
+# %%
+dw_connection = datawrapper.Datawrapper(access_token = DWKEY)
+
+allcharts=dw_connection.get_charts(limit=500)
+
+dw_connection.publish_chart(chart_id="50HqS")
+
+# %%
+
+
+

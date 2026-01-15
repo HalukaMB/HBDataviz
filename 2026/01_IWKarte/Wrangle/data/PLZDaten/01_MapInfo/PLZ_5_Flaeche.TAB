@@ -1,0 +1,14 @@
+!table
+!version 700
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 1
+    Plz_5 Char (5) ;
+begin_metadata
+"\MapInfo" = ""
+"\MapInfo\TableID" = "895a2231-0e08-4aad-8cca-c203b52663db"
+"\MapInfo\ParentTableID" = "1d4c27b3-7179-49b7-b8ef-67b6265aa45b"
+"\IsReadOnly" = "FALSE"
+end_metadata
